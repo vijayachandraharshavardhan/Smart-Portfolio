@@ -1,0 +1,6 @@
+services:
+  - type: web
+    name: smart-portfolio-site
+    env: python
+    buildCommand: ""
+    startCommand: gunicorn smart_portfolio_site.wsgi

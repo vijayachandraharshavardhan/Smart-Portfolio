@@ -1,0 +1,26 @@
+{% extends "projects/base.html" %}
+{% load static %}
+{% block title %}About | Smart Portfolio site{% endblock %}
+{% block content %}
+<div class="row align-items-center">
+  <div class="col-md-4 text-center">
+    <img src="{{ profile.profile_image.url }}" class="rounded-circle" alt="Profile" style="width:180px; height:180px; object-fit:cover;">
+  </div>
+  <div class="col-md-8">
+    <h2>{{ profile.name|default:"Vijaya Chandra Harsha Vardhan Battu" }}</h2>
+    <p class="lead">{{ profile.title|default:"Full Stack Developer • Django & Python Enthusiast" }}</p>
+    <p>{{ profile.about_me|default:"Passionate about building clean, efficient web applications. My skills include Django, Python, HTML, CSS, JavaScript, Bootstrap, and PostgreSQL." }}</p>
+    <div class="social-links">
+      <a href="{{ profile.github }}" target="_blank" class="btn btn-outline-primary me-2">
+        <i class="fab fa-github"></i>
+      </a>
+      <a href="{{ profile.linkedin }}" target="_blank" class="btn btn-outline-primary me-2">
+        <i class="fab fa-linkedin"></i>
+      </a>
+      <a href="mailto:{{ profile.email }}" class="btn btn-outline-primary">
+        <i class="fas fa-envelope"></i>
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}

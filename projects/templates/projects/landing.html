@@ -1,0 +1,348 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Portfolio - Vijaya Chandra Harsha Vardhan</title>
+
+  <!-- Bootstrap & Fonts -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+  <style>
+    html { scroll-behavior: smooth; }
+    body {
+      background: radial-gradient(circle at center, #0f2027, #203a43, #2c5364);
+      background-size: 400% 400%;
+      animation: gradientShift 25s ease infinite;
+      color: #fff;
+      font-family: 'Poppins', sans-serif;
+      overflow-x: hidden;
+      margin: 0;
+    }
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    /* Navbar */
+    .navbar {
+      background: rgba(0,0,0,0.7);
+      backdrop-filter: blur(10px);
+      padding: 1rem 2rem;
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      transition: background 0.4s ease;
+    }
+    .navbar.scrolled { background: rgba(0,0,0,0.9); box-shadow: 0 0 20px #00eaff55; }
+    .navbar .nav-link {
+      color: #fff !important;
+      margin-right: 1.2rem;
+      font-weight: 500;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+    .navbar .nav-link.active {
+      color: #00eaff !important;
+      text-shadow: 0 0 10px #00eaff;
+    }
+    .navbar .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 100%;
+      height: 2px;
+      background: #00eaff;
+      box-shadow: 0 0 15px #00eaff;
+    }
+
+    /* Hero Section */
+    .hero {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 7rem 5% 4rem;
+      min-height: 100vh;
+      position: relative;
+    }
+    #particles {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+    }
+    .hero-text {
+      z-index: 2;
+      max-width: 600px;
+    }
+    .hero-text h1 {
+      font-size: 3.6rem;
+      font-weight: 700;
+      color: #00eaff;
+      text-shadow: 0 0 25px #00eaff;
+      animation: glowPulse 3s ease-in-out infinite alternate;
+    }
+    @keyframes glowPulse {
+      from { text-shadow: 0 0 15px #00eaff88; }
+      to { text-shadow: 0 0 35px #00eaff; }
+    }
+    .btn-primary {
+      background: linear-gradient(135deg, #00eaff, #764ba2);
+      border: none;
+      padding: 0.8rem 1.8rem;
+      border-radius: 50px;
+      box-shadow: 0 0 20px rgba(0,234,255,0.5);
+      transition: all 0.4s ease;
+    }
+    .btn-primary:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 40px rgba(0,234,255,0.8);
+    }
+    .hero-image {
+      z-index: 2;
+      text-align: center;
+    }
+    .hero-image img {
+      max-width: 400px;
+      border-radius: 50%;
+      border: 3px solid rgba(255,255,255,0.2);
+      box-shadow: 0 0 50px rgba(0,234,255,0.4);
+      transition: all 0.4s ease;
+    }
+    .hero-image img:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 70px rgba(0,234,255,0.6);
+    }
+
+    /* Section Glow */
+    section {
+      padding: 6rem 0;
+      position: relative;
+      z-index: 1;
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+      border-radius: 25px;
+      margin: 3rem auto;
+      width: 90%;
+      box-shadow: 0 0 50px rgba(0,234,255,0.15);
+      background: rgba(255,255,255,0.03);
+      overflow: hidden;
+    }
+    section.visible {
+      opacity: 1;
+      transform: translateY(0);
+      box-shadow: 0 0 70px rgba(0,234,255,0.4);
+      animation: borderGlow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes borderGlow {
+      from { box-shadow: 0 0 20px rgba(0,234,255,0.2), 0 0 60px rgba(0,234,255,0.1); }
+      to { box-shadow: 0 0 40px rgba(0,234,255,0.5), 0 0 80px rgba(0,234,255,0.3); }
+    }
+
+    /* Section Headers */
+    section h2 {
+      color: #00eaff;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 2rem;
+      text-shadow: 0 0 20px #00eaffaa;
+    }
+
+    /* Cards and Containers */
+    #about .container, #skills .container, #contact .container {
+      background: rgba(255,255,255,0.05);
+      border-radius: 20px;
+      padding: 3rem;
+      box-shadow: 0 0 25px rgba(0,234,255,0.3);
+      backdrop-filter: blur(8px);
+      position: relative;
+    }
+    #skills .card {
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(0,234,255,0.2);
+      border-radius: 15px;
+      padding: 1.5rem;
+      color: #fff;
+      transition: all 0.3s ease;
+      box-shadow: 0 0 20px rgba(0,234,255,0.15);
+    }
+    #skills .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 0 40px rgba(0,234,255,0.5);
+    }
+
+    /* Social links */
+    .social-links a {
+      font-size: 1.8rem;
+      margin: 0 12px;
+      color: #00eaff;
+      text-shadow: 0 0 10px rgba(0,234,255,0.4);
+      transition: all 0.3s ease;
+    }
+    .social-links a:hover {
+      color: #fff;
+      text-shadow: 0 0 30px rgba(0,234,255,0.8);
+    }
+
+    @media(max-width: 992px) {
+      .hero { flex-direction: column-reverse; text-align: center; padding-top: 8rem; }
+      .hero-image img { max-width: 280px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg">
+    <a class="navbar-brand text-white fw-bold" href="#">Vijaya Chandra</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+      <ul class="navbar-nav">
+        <li class="nav-item"><a class="nav-link active" href="#hero">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#skills">Skills</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'projects' %}">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="hero">
+    <canvas id="particles"></canvas>
+    <div class="hero-text">
+      <h1 id="name"></h1>
+      <h2>{{ profile.title|default:"Full Stack Developer & Tech Enthusiast" }}</h2>
+      <a href="{% url 'projects' %}" class="btn btn-primary mt-4">View My Work</a>
+    </div>
+    <div class="hero-image">
+      <img src="{{ profile.profile_image.url }}" alt="Profile Image">
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about" class="text-center">
+    <div class="container">
+      <h2>About Me</h2>
+      <p>{{ profile.about_me|default:"I am passionate about crafting elegant, efficient web solutions with modern frameworks and a clean design mindset." }}</p>
+    </div>
+  </section>
+
+  <!-- Skills -->
+  <section id="skills" class="text-center">
+    <div class="container">
+      <h2>Skills</h2>
+      <div class="row gy-4">
+        <div class="col-md-3"><div class="card"><h5>Frontend</h5><p>React, Vue, HTML5, CSS3, JS</p></div></div>
+        <div class="col-md-3"><div class="card"><h5>Backend</h5><p>Django, Flask, Node.js</p></div></div>
+        <div class="col-md-3"><div class="card"><h5>Database</h5><p>PostgreSQL, MySQL, MongoDB</p></div></div>
+        <div class="col-md-3"><div class="card"><h5>Tools</h5><p>Git, Docker, AWS, Linux</p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact" class="text-center">
+    <div class="container">
+      <h2>Contact</h2>
+      <p>{{ profile.contact_description|default:"Let's build something extraordinary together!" }}</p>
+      <div class="social-links mt-3">
+        <a href="{{ profile.github }}"><i class="fab fa-github"></i></a>
+        <a href="{{ profile.linkedin }}"><i class="fab fa-linkedin"></i></a>
+        <a href="mailto:{{ profile.email }}"><i class="fas fa-envelope"></i></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    // Active link highlight & navbar glow
+    const sections = document.querySelectorAll("section");
+    const navLinks = document.querySelectorAll(".nav-link");
+    window.addEventListener("scroll", () => {
+      let current = "";
+      sections.forEach(sec => {
+        const top = sec.offsetTop - 150;
+        if (scrollY >= top) current = sec.getAttribute("id");
+      });
+      navLinks.forEach(link => {
+        link.classList.remove("active");
+        if (link.getAttribute("href").includes(current)) link.classList.add("active");
+      });
+      document.querySelector(".navbar").classList.toggle("scrolled", window.scrollY > 50);
+    });
+
+    // Fade + glow reveal
+    const revealElements = document.querySelectorAll("section");
+    const revealOnScroll = () => {
+      revealElements.forEach(el => {
+        const rect = el.getBoundingClientRect();
+        if (rect.top < window.innerHeight - 120) el.classList.add("visible");
+      });
+    };
+    window.addEventListener("scroll", revealOnScroll);
+    revealOnScroll();
+
+    // Typewriter name
+    const nameText = "Hi, I'm Vijaya Chandra Harsha Vardhan";
+    const nameEl = document.getElementById("name");
+    let i = 0;
+    function typeWriter() {
+      if (i < nameText.length) {
+        nameEl.innerHTML += nameText.charAt(i);
+        i++;
+        setTimeout(typeWriter, 90);
+      }
+    }
+    window.onload = typeWriter;
+
+    // Particle glow background
+    const canvas = document.getElementById('particles');
+    const ctx = canvas.getContext('2d');
+    let width, height;
+    function resizeCanvas() {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    const particles = [];
+    for (let j = 0; j < 120; j++) {
+      particles.push({
+        x: Math.random() * width,
+        y: Math.random() * height,
+        size: Math.random() * 2 + 1,
+        speedX: (Math.random() - 0.5),
+        speedY: (Math.random() - 0.5),
+        color: `rgba(0,234,255,${Math.random() * 0.8 + 0.2})`
+      });
+    }
+    function drawParticles() {
+      ctx.clearRect(0, 0, width, height);
+      for (let p of particles) {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+        ctx.fillStyle = p.color;
+        ctx.fill();
+        p.x += p.speedX;
+        p.y += p.speedY;
+        if (p.x < 0 || p.x > width) p.speedX *= -1;
+        if (p.y < 0 || p.y > height) p.speedY *= -1;
+      }
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+  </script>
+</body>
+</html>
