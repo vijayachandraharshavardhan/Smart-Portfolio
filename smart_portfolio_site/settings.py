@@ -2,9 +2,9 @@ import os
 from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-SECRET_KEY = os.environ.get('SECRET_KEY', 'fallback-key-for-development')
+SECRET_KEY = os.environ.get('SECRET_KEY', '-fU_qN7LevuYVUAs6-psstfhT9jIxoHw5Kf-UTqwlx9tfWkfEOGtRjX3p7VcsswYE_dAA')
 DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
-ALLOWED_HOSTS = os.environ.get('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+ALLOWED_HOSTS = ['smart-portfolio-ogp7.onrender.com', 'localhost', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',

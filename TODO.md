@@ -7,6 +7,3 @@
 - [x] Test the updated view by running Django server and navigating to /projects/
 - [x] Ensure filtering and search functionality works correctly
 - [x] Verify responsiveness on different screen sizes
-- [x] Remove Firebase dependencies from requirements.txt
-- [x] Remove Firebase configuration from settings.py
-- [x] Delete Firebase-related files (firebase-credentials.json, firebase-setup-guide.md)

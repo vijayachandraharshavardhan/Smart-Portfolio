@@ -6,8 +6,8 @@ services:
     startCommand: python manage.py migrate && gunicorn smart_portfolio_site.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
-        value: false
+        value: False
       - key: SECRET_KEY
-        generateValue: true
+        value: -fU_qN7LevuYVUAs6-psstfhT9jIxoHw5Kf-UTqwlx9tfWkfEOGtRjX3p7VcsswYE_dAA
       - key: ALLOWED_HOSTS
-        value: smart-portfolio-ogp7.onrender.com,smart-portfolio-site.onrender.com
+        value: Smart-Portfolio.onrender.com,localhost,127.0.0.1
