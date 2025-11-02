@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # ==============================
 # LOAD ENV VARIABLES
 # ==============================
-load_dotenv()  # This loads .env file variables
+load_dotenv()  # Loads .env file
 
 # ==============================
 # BASE SETTINGS
@@ -20,7 +20,11 @@ SECRET_KEY = os.getenv(
 
 DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
+# ⚠️ IMPORTANT: Add your Render domain here
+ALLOWED_HOSTS = os.getenv(
+    'ALLOWED_HOSTS',
+    '127.0.0.1,localhost,smart-portfolio-ogp7.onrender.com'
+).split(',')
 
 # ==============================
 # INSTALLED APPS
