@@ -1,6 +1,7 @@
 {% extends "projects/base.html" %}
 {% load static %}
 {% block title %}Projects | Smart Portfolio Site{% endblock %}
+
 {% block content %}
 <div class="projects-page">
   <!-- ================= HERO ================= -->
@@ -59,6 +60,7 @@
       </div>
       <div class="col-12 col-lg-3 mb-2 mb-md-3 text-lg-end">
         <div class="filter-buttons" style="background: rgba(0, 0, 0, 0.2); backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 8px; padding: 0.5rem; display: flex; flex-wrap: wrap; gap: 0.25rem 0.5rem; justify-content: center;">
+          <button class="btn btn-outline-secondary filter-btn btn-sm active" data-filter="all" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem); padding: 0.25rem 0.5rem;">All</button>
           {% for tech in tech_stacks %}
           <button class="btn btn-outline-secondary filter-btn btn-sm" data-filter="{{ tech }}" style="font-size: clamp(0.75rem, 1.5vw, 0.875rem); padding: 0.25rem 0.5rem;">{{ tech }}</button>
           {% endfor %}
@@ -73,9 +75,9 @@
         <div class="project-card h-100 position-relative" data-bs-toggle="modal" data-bs-target="#projectModal{{ project.id }}">
           <div class="card-img-container">
             {% if project.image %}
-            <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+            <img src="{{ project.image.url }}" class="img-fluid w-100" alt="{{ project.title }}">
             {% elif project.video %}
-            <video class="card-img-top" muted loop>
+            <video class="img-fluid w-100" muted loop>
               <source src="{{ project.video.url }}" type="video/mp4">
             </video>
             {% else %}
@@ -90,7 +92,7 @@
             <p class="card-text small mb-2 mb-md-3" style="font-size: clamp(0.75rem, 2vw, 0.875rem);">{{ project.description|truncatewords:15 }}</p>
             <div class="tech-badges mb-2 mb-md-3">
               {% for tech in project.tech_stack_list %}
-              <span class="badge" style="font-size: clamp(0.65rem, 1.5vw, 0.75rem); padding: 0.2rem 0.4rem;">{{ tech }}</span>
+              <span class="badge bg-secondary" style="font-size: clamp(0.65rem, 1.5vw, 0.75rem); padding: 0.2rem 0.4rem;">{{ tech }}</span>
               {% endfor %}
             </div>
           </div>
@@ -135,13 +137,13 @@
             </div>
             {% endif %}
           </div>
-          <div class="col-12 col-md-6">
+          <div class="col-12 col-md-6 d-flex flex-column">
             <p class="text-muted small mb-3" style="font-size: clamp(0.8rem, 2vw, 0.9rem);"><i class="fas fa-calendar-alt me-1"></i>{{ project.created_at|date:"F Y" }}</p>
             <p class="mb-3 mb-md-4" style="font-size: clamp(0.9rem, 2.5vw, 1rem);">{{ project.description }}</p>
             <h6 class="fw-bold mb-2 mb-md-3" style="font-size: clamp(0.95rem, 2.5vw, 1.1rem);"><i class="fas fa-code me-1"></i>Technologies Used:</h6>
             <div class="tech-badges mb-3 mb-md-4">
               {% for tech in project.tech_stack_list %}
-              <span class="badge" style="font-size: clamp(0.75rem, 2vw, 0.85rem); padding: 0.3rem 0.6rem; margin: 0.1rem;">{{ tech }}</span>
+              <span class="badge bg-secondary" style="font-size: clamp(0.75rem, 2vw, 0.85rem); padding: 0.3rem 0.6rem; margin: 0.1rem;">{{ tech }}</span>
               {% endfor %}
             </div>
             <div class="mt-auto text-end">
@@ -205,9 +207,7 @@ document.addEventListener('DOMContentLoaded', () => {
   document.addEventListener('shown.bs.modal', function (event) {
     if (event.target.classList.contains('modal')) {
       const video = event.target.querySelector('video');
-      if (video) {
-        video.play();
-      }
+      if (video) video.play();
     }
   });
 
