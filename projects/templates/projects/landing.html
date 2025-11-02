@@ -226,7 +226,7 @@
       <a href="{% url 'projects' %}" class="btn btn-primary mt-4">View My Work</a>
     </div>
     <div class="hero-image">
-      <img src="{{ profile.profile_image.url }}" alt="Profile Image">
+      <img src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://via.placeholder.com/400x400{% endif %}" alt="Profile Image">
     </div>
   </section>
 
