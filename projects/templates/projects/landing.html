@@ -28,32 +28,42 @@
       100% { background-position: 0% 50%; }
     }
 
-    /* Navbar */
+    /* ===== Navbar (Enhanced Professional Dark Style) ===== */
     .navbar {
-      background: rgba(0,0,0,0.7);
-      backdrop-filter: blur(12px);
+      background: rgba(10, 10, 10, 0.95);
+      backdrop-filter: blur(20px);
       padding: 1rem 2rem;
       position: fixed;
       width: 100%;
       top: 0;
       z-index: 1000;
+      border-bottom: 1px solid rgba(0, 234, 255, 0.15);
+      box-shadow: 0 0 20px rgba(0, 234, 255, 0.05);
       transition: all 0.4s ease;
-      border-radius: 0 0 15px 15px;
     }
-    .navbar.scrolled { 
-      background: rgba(0,0,0,0.9); 
-      box-shadow: 0 0 25px #00eaff55; 
+    .navbar.scrolled {
+      background: rgba(0, 0, 0, 0.98);
+      box-shadow: 0 0 35px rgba(0, 234, 255, 0.25);
+    }
+    .navbar-brand {
+      color: #00eaff !important;
+      font-weight: 700;
+      letter-spacing: 1px;
+      text-shadow: 0 0 12px rgba(0,234,255,0.7);
     }
     .navbar .nav-link {
-      color: #fff !important;
+      color: #ccc !important;
       margin-right: 1.2rem;
       font-weight: 500;
       position: relative;
       transition: all 0.3s ease;
     }
+    .navbar .nav-link:hover {
+      color: #00eaff !important;
+    }
     .navbar .nav-link.active {
       color: #00eaff !important;
-      text-shadow: 0 0 12px #00eaff;
+      text-shadow: 0 0 15px #00eaff;
     }
     .navbar .nav-link.active::after {
       content: '';
@@ -65,9 +75,15 @@
       background: #00eaff;
       box-shadow: 0 0 18px #00eaff;
     }
-    .navbar-toggler-icon { background-color: #00eaff; border-radius: 3px; }
+    .navbar-toggler {
+      border-color: rgba(0,234,255,0.4);
+    }
+    .navbar-toggler-icon {
+      background-color: #00eaff;
+      border-radius: 3px;
+    }
 
-    /* Hero Section */
+    /* ===== Hero Section ===== */
     .hero {
       display: flex;
       align-items: center;
@@ -126,7 +142,7 @@
       box-shadow: 0 0 80px rgba(0,234,255,0.6);
     }
 
-    /* Section Glow */
+    /* ===== Sections & Glow Effects ===== */
     section {
       padding: 6rem 0;
       position: relative;
@@ -161,7 +177,7 @@
       text-shadow: 0 0 20px #00eaffaa;
     }
 
-    /* Cards & Containers */
+    /* ===== Cards & Containers ===== */
     #about .container, #skills .container, #contact .container {
       background: rgba(255,255,255,0.05);
       border-radius: 20px;
@@ -184,7 +200,7 @@
       box-shadow: 0 0 40px rgba(0,234,255,0.5);
     }
 
-    /* Social Links */
+    /* ===== Social Links ===== */
     .social-links a {
       font-size: 1.8rem;
       margin: 0 12px;
@@ -207,7 +223,7 @@
 
   <!-- Navbar -->
   <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand text-white fw-bold" href="#">Vijaya Chandra</a>
+    <a class="navbar-brand" href="#">B.V.C.HARSHA VARDHAN</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -272,7 +288,6 @@
   <!-- Scripts -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Navbar glow and active links
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-link");
     window.addEventListener("scroll", () => {
@@ -288,7 +303,6 @@
       document.querySelector(".navbar").classList.toggle("scrolled", window.scrollY > 50);
     });
 
-    // Fade-in sections
     const revealElements = document.querySelectorAll("section");
     const revealOnScroll = () => {
       revealElements.forEach(el => {
@@ -299,7 +313,6 @@
     window.addEventListener("scroll", revealOnScroll);
     revealOnScroll();
 
-    // Typewriter for name
     const nameText = "Hi, I'm Vijaya Chandra Harsha Vardhan";
     const nameEl = document.getElementById("name");
     let i = 0;
@@ -312,7 +325,6 @@
     }
     window.onload = typeWriter;
 
-    // Particle background
     const canvas = document.getElementById('particles');
     const ctx = canvas.getContext('2d');
     let width, height;

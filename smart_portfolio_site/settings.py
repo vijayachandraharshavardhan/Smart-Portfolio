@@ -1,28 +1,30 @@
 import os
 from pathlib import Path
 import dj_database_url
+from dotenv import load_dotenv
 
-# ---------------------------------------
+# ==============================
+# LOAD ENV VARIABLES
+# ==============================
+load_dotenv()  # This loads .env file variables
+
+# ==============================
 # BASE SETTINGS
-# ---------------------------------------
+# ==============================
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get(
+SECRET_KEY = os.getenv(
     'SECRET_KEY',
     '-fU_qN7LevuYVUAs6-psstfhT9jIxoHw5Kf-UTqwlx9tfWkfEOGtRjX3p7VcsswYE_dAA'
 )
 
-DEBUG = os.environ.get('DEBUG', 'True').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = [
-    'smart-portfolio-ogp7.onrender.com',
-    'localhost',
-    '127.0.0.1'
-]
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', 'localhost,127.0.0.1').split(',')
 
-# ---------------------------------------
+# ==============================
 # INSTALLED APPS
-# ---------------------------------------
+# ==============================
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -35,12 +37,12 @@ INSTALLED_APPS = [
     'projects',
 ]
 
-# ---------------------------------------
+# ==============================
 # MIDDLEWARE
-# ---------------------------------------
+# ==============================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # for serving static files in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -49,9 +51,9 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-# ---------------------------------------
+# ==============================
 # SECURITY SETTINGS
-# ---------------------------------------
+# ==============================
 if not DEBUG:
     SECURE_SSL_REDIRECT = True
     SECURE_HSTS_SECONDS = 31536000
@@ -65,14 +67,14 @@ if not DEBUG:
 else:
     SECURE_SSL_REDIRECT = False
 
-# ---------------------------------------
+# ==============================
 # URL CONFIG
-# ---------------------------------------
+# ==============================
 ROOT_URLCONF = 'smart_portfolio_site.urls'
 
-# ---------------------------------------
+# ==============================
 # TEMPLATES
-# ---------------------------------------
+# ==============================
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -92,15 +94,15 @@ TEMPLATES = [
     },
 ]
 
-# ---------------------------------------
+# ==============================
 # WSGI
-# ---------------------------------------
+# ==============================
 WSGI_APPLICATION = 'smart_portfolio_site.wsgi.application'
 
-# ---------------------------------------
-# DATABASE CONFIG (SQLite default, PostgreSQL ready)
-# ---------------------------------------
-if os.environ.get('DATABASE_URL'):
+# ==============================
+# DATABASE CONFIG
+# ==============================
+if os.getenv('DATABASE_URL'):
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
@@ -112,40 +114,39 @@ else:
         }
     }
 
-# ---------------------------------------
+# ==============================
 # AUTHENTICATION
-# ---------------------------------------
+# ==============================
 AUTH_PASSWORD_VALIDATORS = []
 
-# ---------------------------------------
+# ==============================
 # LOCALIZATION
-# ---------------------------------------
+# ==============================
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'Asia/Kolkata'
 USE_I18N = True
 USE_TZ = True
 
-# ---------------------------------------
+# ==============================
 # STATIC & MEDIA FILES
-# ---------------------------------------
+# ==============================
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [BASE_DIR / 'projects' / 'static']  # your source static files
-STATIC_ROOT = BASE_DIR / 'staticfiles'  # collected static files for production
+STATICFILES_DIRS = [BASE_DIR / 'projects' / 'static']
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-# Use WhiteNoise with hashed filenames for cache busting
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
-# ---------------------------------------
+# ==============================
 # DEFAULT PRIMARY KEY FIELD
-# ---------------------------------------
+# ==============================
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# ---------------------------------------
-# LOGGING (Optional: helps debug on Render)
-# ---------------------------------------
+# ==============================
+# LOGGING
+# ==============================
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
