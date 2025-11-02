@@ -4,29 +4,33 @@ import dj_database_url
 from dotenv import load_dotenv
 
 # ==============================
+# BASE DIRECTORY
+# ==============================
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+# ==============================
 # LOAD ENV VARIABLES
 # ==============================
-# Loads .env from project root
-BASE_DIR = Path(__file__).resolve().parent.parent
-load_dotenv(BASE_DIR / ".env")
+# Load .env only in local dev; in Render we use Environment Secrets
+dotenv_path = BASE_DIR / ".env"
+if dotenv_path.exists():
+    load_dotenv(dotenv_path)
 
 # ==============================
 # CORE SETTINGS
 # ==============================
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key-for-local")
-
 DEBUG = os.getenv("DEBUG", "False").lower() == "true"
 
 # ==============================
 # ALLOWED HOSTS
 # ==============================
-# Read from environment variable, fallback to localhost and Render domain
+# Read from environment variable
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
     "127.0.0.1,localhost,smart-portfolio-ogp7.onrender.com"
 ).split(",")
-
-# Strip spaces to avoid DisallowedHost
+# Clean up spaces
 ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()]
 
 # ==============================
@@ -39,9 +43,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-
-    # Local apps
-    "projects",
+    "projects",  # Local app
 ]
 
 # ==============================
@@ -49,7 +51,7 @@ INSTALLED_APPS = [
 # ==============================
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # for static files in production
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # serve static files
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -84,10 +86,7 @@ ROOT_URLCONF = "smart_portfolio_site.urls"
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [
-            BASE_DIR / "templates",
-            BASE_DIR / "projects" / "templates",
-        ],
+        "DIRS": [BASE_DIR / "templates", BASE_DIR / "projects" / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -106,7 +105,7 @@ TEMPLATES = [
 WSGI_APPLICATION = "smart_portfolio_site.wsgi.application"
 
 # ==============================
-# DATABASE CONFIG
+# DATABASE
 # ==============================
 DATABASE_URL = os.getenv("DATABASE_URL")
 
@@ -123,7 +122,7 @@ else:
     }
 
 # ==============================
-# AUTHENTICATION
+# PASSWORD VALIDATORS
 # ==============================
 AUTH_PASSWORD_VALIDATORS = []
 
@@ -136,7 +135,7 @@ USE_I18N = True
 USE_TZ = True
 
 # ==============================
-# STATIC & MEDIA FILES
+# STATIC & MEDIA
 # ==============================
 STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "projects" / "static"]
@@ -148,7 +147,7 @@ MEDIA_ROOT = BASE_DIR / "media"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # ==============================
-# DEFAULT PRIMARY KEY FIELD
+# DEFAULT AUTO FIELD
 # ==============================
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
@@ -159,18 +158,13 @@ LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
     "handlers": {
-        "console": {
-            "class": "logging.StreamHandler",
-        },
+        "console": {"class": "logging.StreamHandler"},
     },
-    "root": {
-        "handlers": ["console"],
-        "level": "INFO",
-    },
+    "root": {"handlers": ["console"], "level": "INFO"},
 }
 
 # ==============================
-# DEBUG PRINT (optional, remove in production)
+# DEBUG INFO (optional)
 # ==============================
 print(f"DEBUG={DEBUG}")
 print(f"ALLOWED_HOSTS={ALLOWED_HOSTS}")
