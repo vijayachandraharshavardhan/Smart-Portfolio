@@ -220,7 +220,32 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     }
   });
+
+  // ================== MOBILE AUTOPLAY ==================
+  function isTouchDevice() {
+    return ('ontouchstart' in window) || (navigator.maxTouchPoints > 0) || (navigator.msMaxTouchPoints > 0);
+  }
+
+  if (isTouchDevice()) {
+    projectCards.forEach(card => {
+      const video = card.querySelector('video');
+      if (video) {
+        video.muted = true; 
+        video.loop = true; 
+        video.play().catch(() => { console.log('Video autoplay blocked'); });
+      }
+    });
+  }
 });
 </script>
+
+<style>
+/* Mobile: ensure video is visible */
+@media (hover: none) {
+  .project-card video {
+    opacity: 1 !important;
+  }
+}
+</style>
 
 {% endblock %}

@@ -12,21 +12,34 @@
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
   <style>
-    /* Navbar Glow + Active Link */
+    /* Navbar */
     .navbar {
       background: rgba(0,0,0,0.7);
       backdrop-filter: blur(10px);
-      padding: 1rem 2rem;
+      padding: 0.8rem 2rem;
       position: fixed;
       width: 100%;
       top: 0;
       z-index: 1000;
       transition: background 0.4s ease, box-shadow 0.4s ease;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
     .navbar.scrolled { 
       background: rgba(0,0,0,0.9); 
       box-shadow: 0 0 20px #00eaff55; 
     }
+
+    /* Brand */
+    .navbar-brand {
+      font-size: clamp(1rem, 2vw, 1.5rem);
+      color: #fff;
+      font-weight: bold;
+      text-align: left;
+    }
+
+    /* Nav links */
     .navbar .nav-link {
       color: #fff !important;
       margin-right: 1.2rem;
@@ -59,22 +72,46 @@
       transition: border-color 0.3s ease;
       cursor: pointer;
     }
+
+    /* Toggle button fixed */
+    .navbar-toggler {
+      top: 15px;
+      right: 15px;
+      position: fixed;
+      z-index: 1100;
+    }
+
+    /* Collapsed menu pushes below navbar */
+    @media (max-width: 991px) {
+      #navbarContent {
+        margin-top: 70px;
+        background: rgba(0,0,0,0.95);
+        padding: 1rem 0;
+      }
+      #navbarContent .nav-link {
+        margin: 0.5rem 1rem;
+      }
+    }
   </style>
 </head>
 <body>
 
   <!-- Navbar -->
-  <nav class="navbar navbar-expand-lg">
-    <a class="navbar-brand fw-bold" href="/">VIJAYA CHANDRA HARSHA VARDHAN</a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+    <a class="navbar-brand" href="/">VIJAYA CHANDRA HARSHA VARDHAN</a>
+
+    <!-- Toggle -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarContent">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse justify-content-end" id="navMenu">
+
+    <!-- Links -->
+    <div class="collapse navbar-collapse justify-content-end" id="navbarContent">
       <ul class="navbar-nav align-items-center">
-        <li class="nav-item"><a class="nav-link" href="/">Home</a></li>
-        <li class="nav-item"><a class="nav-link" href="/projects/">Projects</a></li>
-        <li class="nav-item"><a class="nav-link" href="/about/">About</a></li>
-        <li class="nav-item"><a class="nav-link" href="/contact/">Contact</a></li>
+        <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+        <li class="nav-item"><a class="nav-link" href="#projects">Projects</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
         <li class="nav-item"><a class="nav-link" href="/admin/">Admin</a></li>
         {% if profile and profile.profile_image %}
         <li class="nav-item ms-2">
@@ -125,6 +162,7 @@
     </div>
   </div>
 
+  <!-- Footer -->
   <footer class="bg-dark text-light text-center py-3 py-md-4">
     <small>© {% now 'Y' %} Vijaya Chandra Harsha Vardhan</small>
   </footer>
@@ -136,6 +174,10 @@
     // Navbar scroll & active link
     const sections = document.querySelectorAll("section");
     const navLinks = document.querySelectorAll(".nav-link");
+    const navbarCollapse = document.getElementById('navbarContent');
+    const bsCollapse = new bootstrap.Collapse(navbarCollapse, {toggle:false});
+
+    // Scroll + Active
     window.addEventListener("scroll", () => {
       let current = "";
       sections.forEach(sec => {
@@ -147,6 +189,15 @@
         if (link.getAttribute("href").includes(current)) link.classList.add("active");
       });
       document.querySelector(".navbar").classList.toggle("scrolled", window.scrollY > 50);
+    });
+
+    // Collapse menu on link click (mobile)
+    navLinks.forEach(link => {
+      link.addEventListener('click', () => {
+        if (window.innerWidth < 992) { // only collapse on small screens
+          bsCollapse.hide();
+        }
+      });
     });
   </script>
 </body>

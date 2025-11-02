@@ -128,16 +128,22 @@
     }
     .hero-image {
       z-index: 2;
-      text-align: center;
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:center;
+      gap:1rem;
     }
-    .hero-image img {
-      max-width: 400px;
+    .hero-image img,
+    .hero-image video {
+      max-width: 320px;
+      width: 100%;
       border-radius: 50%;
       border: 3px solid rgba(255,255,255,0.2);
       box-shadow: 0 0 50px rgba(0,234,255,0.4);
       transition: all 0.4s ease;
     }
-    .hero-image img:hover {
+    .hero-image img:hover,
+    .hero-image video:hover {
       transform: scale(1.07);
       box-shadow: 0 0 80px rgba(0,234,255,0.6);
     }
@@ -215,7 +221,7 @@
 
     @media(max-width: 992px) {
       .hero { flex-direction: column-reverse; text-align: center; padding-top: 8rem; }
-      .hero-image img { max-width: 280px; margin-bottom: 2rem; }
+      .hero-image img, .hero-image video { max-width: 280px; margin-bottom: 2rem; }
     }
   </style>
 </head>
@@ -246,8 +252,17 @@
       <h2>{{ profile.title|default:"Full Stack Developer & Tech Enthusiast" }}</h2>
       <a href="{% url 'projects' %}" class="btn btn-primary mt-4">View My Work</a>
     </div>
+
     <div class="hero-image">
-      <img src="{% if profile.profile_image %}{{ profile.profile_image.url }}{% else %}https://via.placeholder.com/400x400{% endif %}" alt="Profile Image">
+      {% for media in profile.hero_media.all %}
+        {% if media.is_video %}
+          <video src="{{ media.file.url }}" autoplay loop muted playsinline></video>
+        {% else %}
+          <img src="{{ media.file.url }}" alt="Profile Media">
+        {% endif %}
+      {% empty %}
+        <img src="{% static 'images/default_profile.png' %}" alt="Profile Image">
+      {% endfor %}
     </div>
   </section>
 
