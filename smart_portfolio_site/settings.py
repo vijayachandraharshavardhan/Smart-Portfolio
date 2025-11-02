@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # ==============================
 # LOAD ENV VARIABLES
 # ==============================
-load_dotenv()  # Loads .env file
+load_dotenv()  # Load .env file from BASE_DIR
 
 # ==============================
 # BASE SETTINGS
@@ -15,12 +15,11 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.getenv(
     'SECRET_KEY',
-    '-fU_qN7LevuYVUAs6-psstfhT9jIxoHw5Kf-UTqwlx9tfWkfEOGtRjX3p7VcsswYE_dAA'
+    'fallback-secret-key-for-local'
 )
 
-DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
+DEBUG = os.getenv('DEBUG', 'False').lower() == 'true'
 
-# ⚠️ IMPORTANT: Add your Render domain here
 ALLOWED_HOSTS = os.getenv(
     'ALLOWED_HOSTS',
     '127.0.0.1,localhost,smart-portfolio-ogp7.onrender.com'
@@ -46,7 +45,7 @@ INSTALLED_APPS = [
 # ==============================
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',  # for static files in production
+    'whitenoise.middleware.WhiteNoiseMiddleware',  # for serving static files in production
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -64,7 +63,6 @@ if not DEBUG:
     SECURE_HSTS_INCLUDE_SUBDOMAINS = True
     SECURE_HSTS_PRELOAD = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
-    SECURE_BROWSER_XSS_FILTER = True
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     X_FRAME_OPTIONS = 'DENY'
@@ -106,9 +104,11 @@ WSGI_APPLICATION = 'smart_portfolio_site.wsgi.application'
 # ==============================
 # DATABASE CONFIG
 # ==============================
-if os.getenv('DATABASE_URL'):
+DATABASE_URL = os.getenv('DATABASE_URL')
+
+if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
+        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600)
     }
 else:
     DATABASES = {
