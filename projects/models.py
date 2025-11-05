@@ -1,11 +1,12 @@
 from django.db import models
+from cloudinary.models import CloudinaryField
 
 class Project(models.Model):
     title = models.CharField(max_length=200)
     description = models.TextField()
     tech_stack = models.CharField(max_length=200, blank=True)
-    image = models.ImageField(upload_to='projects/', blank=True, null=True)
-    video = models.FileField(upload_to='projects/videos/', blank=True, null=True, help_text="Upload your project video (MP4, AVI, etc.)")
+    image = CloudinaryField('image', blank=True, null=True)
+    video = CloudinaryField('video', blank=True, null=True, resource_type='video', help_text="Upload your project video (MP4, AVI, etc.)")
     position = models.PositiveIntegerField(default=0, help_text="Position for ordering (lower numbers appear first)")
     live_demo = models.URLField(blank=True, null=True)
     github_link = models.URLField(blank=True, null=True)
@@ -19,7 +20,7 @@ class Project(models.Model):
 
 class IntroVideo(models.Model):
     title = models.CharField(max_length=200, default="Intro Video")
-    video_file = models.FileField(upload_to='videos/', help_text="Upload your intro video (MP4 format)")
+    video_file = CloudinaryField('video', resource_type='video', help_text="Upload your intro video (MP4 format)")
     is_active = models.BooleanField(default=True, help_text="Only one active video will be displayed")
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
@@ -43,7 +44,7 @@ class Profile(models.Model):
     email = models.EmailField(default="your.email@example.com")
     linkedin = models.URLField(default="/in/yourprofile")
     github = models.URLField(default="/yourusername")
-    profile_image = models.ImageField(upload_to='profile/', blank=True, null=True)
+    profile_image = CloudinaryField('image', blank=True, null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

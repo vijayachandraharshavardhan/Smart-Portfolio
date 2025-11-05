@@ -221,15 +221,11 @@
       <a href="{% url 'projects' %}" class="btn btn-primary mt-4">View My Work</a>
     </div>
     <div class="hero-image">
-      {% for media in profile.hero_media.all %}
-        {% if media.is_video %}
-          <video src="{{ media.file.url }}" autoplay loop muted playsinline></video>
-        {% else %}
-          <img src="{{ media.file.url }}" alt="Profile Media">
-        {% endif %}
-      {% empty %}
+      {% if profile.profile_image %}
+        <img src="{{ profile.profile_image.url }}" alt="Profile Image">
+      {% else %}
         <img src="{% static 'images/default_profile.png' %}" alt="Profile Image">
-      {% endfor %}
+      {% endif %}
     </div>
   </section>
 
