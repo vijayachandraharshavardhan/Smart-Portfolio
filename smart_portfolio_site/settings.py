@@ -156,6 +156,9 @@ CLOUDINARY_STORAGE = {
 
 cloudinary.config(**CLOUDINARY_STORAGE)
 
+# Ensure uploads use permanent public URLs, not expiring authenticated ones
+cloudinary.uploader.default_upload_options = {'type': 'upload'}
+
 # Use Cloudinary for media files
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
