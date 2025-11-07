@@ -1,4 +1,4 @@
-- [x] Add check_cloudinary view to projects/views.py
-- [x] Add URL path for /check-cloudinary/ in projects/urls.py
-- [ ] Test the view locally if needed
-- [ ] Redeploy on Render and verify the endpoint
+- [ ] Add check_cloudinary view to projects/views.py
+- [ ] Add URL path for check-cloudinary to projects/urls.py
+- [ ] Commit changes
+- [ ] Deploy to Render and test the endpoint
