@@ -2,7 +2,7 @@
 - [x] Configure PostgreSQL settings in settings.py
 - [x] Run migrations to create tables in PostgreSQL
 - [x] Test Django server connection to PostgreSQL
-- [x] Create superuser (Harsha2945)
+- [x] Create superuser (admin/admin123)
 - [x] Fix projects and images/videos missing issue - added Cloudinary media URLs to database
 - [ ] Add PostgreSQL database on Render dashboard
 - [ ] Connect PostgreSQL to web service on Render

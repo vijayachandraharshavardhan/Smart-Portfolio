@@ -1,19 +1,21 @@
 services:
   - type: web
     name: smart-portfolio-site
-    env: python
-    buildCommand: pip install -r requirements.txt && python manage.py collectstatic --noinput
-    startCommand: python manage.py migrate && gunicorn smart_portfolio_site.wsgi:application --bind 0.0.0.0:$PORT
+    runtime: python3
+    buildCommand: pip install -r requirements.txt
+    startCommand: python manage.py setup_render && gunicorn smart_portfolio_site.wsgi:application --bind 0.0.0.0:$PORT
     envVars:
       - key: DEBUG
         value: False
       - key: SECRET_KEY
-        value: -fU_qN7LevuYVUAs6-psstfhT9jIxoHw5Kf-UTqwlx9tfWkfEOGtRjX3p7VcsswYE_dAA
-      - key: ALLOWED_HOSTS
-        value: smart-portfolio-ogp7.onrender.com,localhost,127.0.0.1
+        fromSecret: SECRET_KEY
+      - key: DATABASE_URL
+        fromSecret: DATABASE_URL
       - key: CLOUDINARY_CLOUD_NAME
-        value: dnglmw8l0
+        fromSecret: CLOUDINARY_CLOUD_NAME
       - key: CLOUDINARY_API_KEY
-        value: 986362225853921
+        fromSecret: CLOUDINARY_API_KEY
       - key: CLOUDINARY_API_SECRET
-        value: nZREC-59laRxF120SXrm91XIUmE
+        fromSecret: CLOUDINARY_API_SECRET
+      - key: ALLOWED_HOSTS
+        value: smart-portfolio-ogp7.onrender.com
