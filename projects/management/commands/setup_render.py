@@ -1,6 +1,7 @@
 from django.core.management.base import BaseCommand
 from django.contrib.auth.models import User
 from django.core.management import call_command
+from projects.models import Project, Profile, IntroVideo
 
 class Command(BaseCommand):
     help = 'Setup database for Render deployment'
@@ -11,18 +12,18 @@ class Command(BaseCommand):
         # Run migrations
         call_command('migrate', verbosity=1)
 
-        # Load data
-        try:
-            call_command('loaddata', 'render_data_clean.json', verbosity=1)
-            self.stdout.write(self.style.SUCCESS('Data loaded successfully'))
-        except Exception as e:
-            self.stdout.write(self.style.WARNING(f'Could not load data: {e}'))
+        # Create superuser (always recreate to ensure clean state)
+        self.stdout.write('Creating superuser...')
+        User.objects.filter(username='admin').delete()  # Remove any existing
+        User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
+        self.stdout.write(self.style.SUCCESS('Superuser created: admin/admin123'))
 
-        # Create superuser if it doesn't exist
-        if not User.objects.filter(username='admin').exists():
-            User.objects.create_superuser('admin', 'admin@example.com', 'admin123')
-            self.stdout.write(self.style.SUCCESS('Superuser created: admin/admin123'))
-        else:
-            self.stdout.write('Superuser already exists')
+        # Clear existing data
+        self.stdout.write('Clearing existing data...')
+        Project.objects.all().delete()
+        Profile.objects.all().delete()
+        IntroVideo.objects.all().delete()
+
+        self.stdout.write('Data cleared. Ready for fresh content via admin panel.')
 
         self.stdout.write(self.style.SUCCESS('Setup complete!'))
