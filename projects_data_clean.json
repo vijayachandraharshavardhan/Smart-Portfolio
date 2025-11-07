@@ -1,0 +1,78 @@
+[
+{
+  "model": "projects.project",
+  "pk": 2,
+  "fields": {
+    "title": "Smart Transport & Portal management system",
+    "description": "A comprehensive system for managing transportation and portal operations.",
+    "tech_stack": "Python, Django, PostgreSQL",
+    "image": "image/upload/v1730999293/project1.jpg",
+    "video": "video/upload/v1730999293/project1.mp4",
+    "position": 0,
+    "live_demo": null,
+    "github_link": null,
+    "created_at": "2025-11-07T16:48:13.095Z"
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 3,
+  "fields": {
+    "title": "AI Assistant for Students",
+    "description": "An AI-powered assistant to help students with learning and study tasks.",
+    "tech_stack": "Python, Machine Learning, NLP",
+    "image": "image/upload/v1730999293/project2.jpg",
+    "video": "video/upload/v1730999293/project2.mp4",
+    "position": 0,
+    "live_demo": null,
+    "github_link": null,
+    "created_at": "2025-11-07T16:48:13.104Z"
+  }
+},
+{
+  "model": "projects.project",
+  "pk": 4,
+  "fields": {
+    "title": "T20 Cricket Score-Predictor",
+    "description": "Predict cricket scores for T20 matches using data analysis.",
+    "tech_stack": "Python, Data Science, ML",
+    "image": "image/upload/v1730999293/project3.jpg",
+    "video": "video/upload/v1730999293/project3.mp4",
+    "position": 0,
+    "live_demo": null,
+    "github_link": null,
+    "created_at": "2025-11-07T16:48:13.104Z"
+  }
+},
+{
+  "model": "projects.introvideo",
+  "pk": 1,
+  "fields": {
+    "title": "Intro Video",
+    "video_file": "video/upload/v1730999293/intro.mp4",
+    "is_active": true,
+    "uploaded_at": "2025-11-07T16:48:40.284Z"
+  }
+},
+{
+  "model": "projects.profile",
+  "pk": 1,
+  "fields": {
+    "name": "Vijaya Chandra Harsha Vardhan Battu",
+    "title": "Full Stack Developer & Tech Enthusiast",
+    "about_me": "Passionate full-stack developer with expertise in modern web technologies. I love creating innovative solutions and bringing ideas to life through code.",
+    "frontend_skills": "React, Vue.js, HTML5, CSS3, JavaScript",
+    "backend_skills": "Python, Django, Node.js, Express",
+    "database_skills": "PostgreSQL, MongoDB, MySQL",
+    "tools_skills": "Git, Docker, AWS, Linux",
+    "portfolio_description": "Check out my latest projects",
+    "contact_description": "Let's work together!",
+    "email": "your.email@example.com",
+    "linkedin": "/in/yourprofile",
+    "github": "/yourusername",
+    "profile_image": "image/upload/v1730999293/harsha_pro.jpg",
+    "created_at": "2025-11-07T16:48:26.278Z",
+    "updated_at": "2025-11-07T16:49:43.867Z"
+  }
+}
+]

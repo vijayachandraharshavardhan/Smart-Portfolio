@@ -1,4 +1,11 @@
-- [ ] Add check_cloudinary view to projects/views.py
-- [ ] Add URL path for check-cloudinary to projects/urls.py
-- [ ] Commit changes
-- [ ] Deploy to Render and test the endpoint
+- [x] Delete db.sqlite3 file (switched to PostgreSQL)
+- [x] Configure PostgreSQL settings in settings.py
+- [x] Run migrations to create tables in PostgreSQL
+- [x] Test Django server connection to PostgreSQL
+- [x] Create superuser (Harsha2945)
+- [x] Fix projects and images/videos missing issue - added Cloudinary media URLs to database
+- [ ] Add PostgreSQL database on Render dashboard
+- [ ] Connect PostgreSQL to web service on Render
+- [ ] Redeploy to Render (migrations run automatically)
+- [ ] Test site functionality (landing, projects, admin)
+- [ ] Create superuser if needed (run in Render shell: python manage.py createsuperuser)
