@@ -20,7 +20,7 @@ if dotenv_path.exists():
 # CORE SETTINGS
 # ==============================
 SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key-for-local")
-DEBUG = os.getenv("DEBUG", "False").lower() == "true"
+DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
 # ==============================
 # ALLOWED HOSTS
