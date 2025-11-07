@@ -12,6 +12,10 @@ class Command(BaseCommand):
         # Run migrations
         call_command('migrate', verbosity=1)
 
+        # Collect static files
+        self.stdout.write('Collecting static files...')
+        call_command('collectstatic', '--noinput', verbosity=0)
+
         # Create superuser (always recreate to ensure clean state)
         self.stdout.write('Creating superuser...')
         User.objects.filter(username='admin').delete()  # Remove any existing
