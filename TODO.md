@@ -4,8 +4,9 @@
 - [x] Test Django server connection to PostgreSQL
 - [x] Create superuser (admin/admin123)
 - [x] Fix projects and images/videos missing issue - added Cloudinary media URLs to database
-- [ ] Add PostgreSQL database on Render dashboard
-- [ ] Connect PostgreSQL to web service on Render
-- [ ] Redeploy to Render (migrations run automatically)
-- [ ] Test site functionality (landing, projects, admin)
-- [ ] Create superuser if needed (run in Render shell: python manage.py createsuperuser)
+- [x] Add PostgreSQL database on Render dashboard
+- [x] Connect PostgreSQL to web service on Render
+- [x] Redeploy to Render (migrations run automatically)
+- [x] Test site functionality (landing, projects, admin)
+- [x] Create superuser if needed (run in Render shell: python manage.py createsuperuser)
+- [x] Push latest changes to git for redeploy
