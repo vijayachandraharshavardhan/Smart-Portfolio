@@ -125,7 +125,10 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL and DATABASE_URL.strip():
     DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=0, conn_params={'sslmode': 'require'})
+        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=0, ssl_require=True)
+    }
+    DATABASES['default']['OPTIONS'] = {
+        'sslmode': 'require',
     }
 else:
     DATABASES = {
