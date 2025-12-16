@@ -2,6 +2,9 @@ import os
 from pathlib import Path
 import dj_database_url
 from dotenv import load_dotenv
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
 
 # ==============================
 # BASE DIRECTORY
@@ -11,7 +14,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # ==============================
 # LOAD ENV VARIABLES
 # ==============================
-# Load .env only in local dev; in Render we use Environment Secrets
 dotenv_path = BASE_DIR / ".env"
 if dotenv_path.exists():
     load_dotenv(dotenv_path)
@@ -23,15 +25,18 @@ SECRET_KEY = os.getenv("SECRET_KEY", "fallback-secret-key-for-local")
 DEBUG = os.getenv("DEBUG", "True").lower() == "true"
 
 # ==============================
-# ALLOWED HOSTS
+# ALLOWED HOSTS & CSRF
 # ==============================
-# Read from environment variable
 ALLOWED_HOSTS = os.getenv(
     "ALLOWED_HOSTS",
     "127.0.0.1,localhost,smart-portfolio-ogp7.onrender.com"
 ).split(",")
-# Clean up spaces
+
 ALLOWED_HOSTS = [host.strip() for host in ALLOWED_HOSTS if host.strip()]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://smart-portfolio-ogp7.onrender.com",
+]
 
 # ==============================
 # INSTALLED APPS
@@ -53,13 +58,20 @@ INSTALLED_APPS = [
 # ==============================
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware",  # serve static files
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # Serve static files
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+]
+
+# ==============================
+# AUTHENTICATION BACKENDS
+# ==============================
+AUTHENTICATION_BACKENDS = [
+    "django.contrib.auth.backends.ModelBackend",
 ]
 
 # ==============================
@@ -113,7 +125,7 @@ DATABASE_URL = os.getenv("DATABASE_URL")
 
 if DATABASE_URL and DATABASE_URL.strip():
     DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=600)
+        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=0, conn_params={'sslmode': 'require'})
     }
 else:
     DATABASES = {
@@ -130,7 +142,20 @@ else:
 # ==============================
 # PASSWORD VALIDATORS
 # ==============================
-AUTH_PASSWORD_VALIDATORS = []
+AUTH_PASSWORD_VALIDATORS = [
+    {
+        "NAME": "django.contrib.auth.password_validation.UserAttributeSimilarityValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.MinimumLengthValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.CommonPasswordValidator",
+    },
+    {
+        "NAME": "django.contrib.auth.password_validation.NumericPasswordValidator",
+    },
+]
 
 # ==============================
 # LOCALIZATION
@@ -147,24 +172,18 @@ STATIC_URL = "/static/"
 STATICFILES_DIRS = [BASE_DIR / "projects" / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
-# Cloudinary settings
-import cloudinary
-import cloudinary.uploader
-import cloudinary.api
-
 CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.getenv('CLOUDINARY_CLOUD_NAME'),
-    'API_KEY': os.getenv('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.getenv('CLOUDINARY_API_SECRET'),
+    "CLOUD_NAME": os.getenv("CLOUDINARY_CLOUD_NAME"),
+    "API_KEY": os.getenv("CLOUDINARY_API_KEY"),
+    "API_SECRET": os.getenv("CLOUDINARY_API_SECRET"),
 }
 
 cloudinary.config(**CLOUDINARY_STORAGE)
 
-# Use Cloudinary for media files
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+DEFAULT_FILE_STORAGE = "cloudinary_storage.storage.MediaCloudinaryStorage"
 
 MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / "media"  # Fallback for local development
+MEDIA_ROOT = BASE_DIR / "media"  # Local fallback
 
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
@@ -186,7 +205,8 @@ LOGGING = {
 }
 
 # ==============================
-# DEBUG INFO (optional)
+# DEBUG INFO
 # ==============================
 print(f"DEBUG={DEBUG}")
 print(f"ALLOWED_HOSTS={ALLOWED_HOSTS}")
+print(f"CSRF_TRUSTED_ORIGINS={CSRF_TRUSTED_ORIGINS}")
