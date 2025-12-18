@@ -123,25 +123,13 @@ WSGI_APPLICATION = "smart_portfolio_site.wsgi.application"
 # ==============================
 DATABASE_URL = os.getenv("DATABASE_URL")
 
-if DATABASE_URL and DATABASE_URL.strip():
-    DATABASES = {
-        "default": dj_database_url.parse(DATABASE_URL, conn_max_age=0)
-    }
-    # For psycopg2, adjust SSL options if needed
-    DATABASES['default']['OPTIONS'] = {
-        'sslmode': 'require',
-    }
-else:
-    DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": "My_portfolio",
-            "USER": "postgres",
-            "PASSWORD": "Harsha@108",
-            "HOST": "localhost",
-            "PORT": "5432",
-        }
-    }
+DATABASES = {
+    "default": dj_database_url.parse(
+        os.environ.get("DATABASE_URL"),
+        conn_max_age=600,
+        ssl_require=True
+    )
+}
 
 # ==============================
 # PASSWORD VALIDATORS
